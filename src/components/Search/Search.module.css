@@ -1,0 +1,15 @@
+.Search{
+    height: 100px;
+    display:flex; 
+    justify-content:center;
+    align-items: center;
+}
+.SearchAndSubmit .Form{
+    width: 270px;
+    display:flex;
+    justify-content: space-between;
+}
+
+.SearchAndSubmit input{
+    font-size: 1.2em;
+}

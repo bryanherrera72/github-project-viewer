@@ -1,0 +1,6 @@
+.RootLayout{
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: 10% auto;
+    box-sizing: border-box;
+}
