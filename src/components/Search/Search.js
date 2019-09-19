@@ -1,23 +1,39 @@
-import React, { useState } from "react";
+import React, { Component } from "react";
 import classes from "./Search.module.css";
-const Search = props => {
-  const hint = "Enter a repository name";
-  const [findValue, setFindValue] = useState("");
+class Search extends Component {
+  state = {
+    findValue: ""
+  };
+  onChangeHandler = event => {
+    console.log(event.target.value);
+    this.setState({
+      findValue: event.target.value
+    });
+  };
+  onClickFocus = () => {
+    this.inputForm.focus();
+  };
 
-  return (
-    <div className={classes.Search}>
-      <div className={classes.SearchAndSubmit}>
-        <form className={classes.Form} onSubmit={props.submit}>
-          <input
-            name="find"
-            placeholder={hint}
-            value={findValue}
-            onChange={event => setFindValue(event.target.value)}
-          />
-          <button type="submit">Find</button>
-        </form>
+  render() {
+    return (
+      <div className={classes.Search}>
+        <div className={classes.SearchAndSubmit}>
+          <form className={classes.Form} onSubmit={this.props.submit}>
+            <input
+              ref={ref => {
+                this.inputForm = ref;
+              }}
+              name="find"
+              onClick={this.onClickFocus}
+              placeholder={"Enter a repository name."}
+              value={this.state.findValue}
+              onChange={this.onChangeHandler}
+            />
+            <button type="submit">Find</button>
+          </form>
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 export default Search;
