@@ -1,5 +1,8 @@
 .Search{
     /* height: 100px; */
+    position:absolute;
+    width:100%;
+    /* left: calc(50% - 100px); */
     display:flex; 
     justify-content:center;
     align-items: center;

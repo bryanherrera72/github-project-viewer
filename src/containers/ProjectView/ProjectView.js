@@ -2,14 +2,15 @@ import React, { Component } from "react";
 import classes from "./ProjectView.module.css";
 import * as THREE from "three";
 import TrackballControls from "three-trackballcontrols";
+import Search from "../../components/Search/Search";
 class ProjectView extends Component {
   componentDidMount() {
     this.init();
-    this.initAnimate();
+    this.animate();
     this.addShapes();
     this.threeRender();
   }
-
+  //set up camera, controls, scene, lights
   init = () => {
     this.width = window.innerWidth;
     this.height = window.innerHeight;
@@ -35,7 +36,10 @@ class ProjectView extends Component {
     this.renderer.setClearColor(0xffffff);
 
     //init controls
-    this.controls = new TrackballControls(this.camera);
+    this.controls = new TrackballControls(
+      this.camera,
+      this.renderer.domElement
+    );
     this.controls.addEventListener("change", this.threeRender);
 
     //init lights
@@ -51,7 +55,7 @@ class ProjectView extends Component {
     //Set up resize listener
     window.addEventListener("resize", this.onWindowUpdate, false);
   };
-
+  //self explanatory
   addShapes = () => {
     let geo2 = new THREE.DodecahedronGeometry(10, 1),
       mat2 = new THREE.MeshToonMaterial({ color: 0x00ffff });
@@ -66,14 +70,16 @@ class ProjectView extends Component {
     // this.scene.add(cube);
     console.log("shape added");
   };
-
-  initAnimate = () => {
-    requestAnimationFrame(this.initAnimate);
+  //animate loop
+  animate = () => {
+    requestAnimationFrame(this.animate);
     this.controls.update();
   };
+  //"re render"
   threeRender = () => {
     this.renderer.render(this.scene, this.camera);
   };
+  //handles resize events
   onWindowUpdate = () => {
     this.width = window.innerWidth;
     this.height = window.innerHeight;
@@ -83,12 +89,19 @@ class ProjectView extends Component {
     this.controls.handleResize();
   };
 
-  onRemoveFormFocus = () => {};
-
   render() {
     return (
-      <div className={classes.ProjectView} onClick={this.onRemoveFormFocus}>
-        <canvas ref={ref => (this.mountLocation = ref)}></canvas>
+      <div className={classes.ProjectView}>
+        <Search submit={this.props.submit} />
+
+        {/* <canvas ref={ref => (this.mountLocation = ref)}></canvas> */}
+        {this.props.repo.title ? (
+          <p>Cool, you chose {this.props.repo.title}</p>
+        ) : (
+          <h2>
+            Enter the name of a repository like so: [owner username]/[repo name]
+          </h2>
+        )}
       </div>
     );
   }
