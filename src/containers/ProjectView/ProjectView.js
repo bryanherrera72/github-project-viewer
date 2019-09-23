@@ -6,9 +6,45 @@ import Search from "../../components/Search/Search";
 class ProjectView extends Component {
   componentDidMount() {
     this.init();
-    this.animate();
+    /**
+     * Set up loading manager
+     */
+    this.loadingManager = new THREE.LoadingManager();
+    this.loadingManager.onStart = (url, itemsLoaded, itemsTotal) => {
+      console.log(
+        "Started loading file: " +
+          url +
+          ".\nLoaded " +
+          itemsLoaded +
+          " of " +
+          itemsTotal +
+          " files."
+      );
+    };
+
+    //start animation here.
+    this.loadingManager.onLoad = () => {
+      console.log("Load complete");
+      this.animate();
+
+      this.threeRender();
+    };
+    this.loadingManager.onProgress = (url, itemsLoaded, itemsTotal) => {
+      console.log(
+        "Loading file: " +
+          url +
+          ".\nLoaded " +
+          itemsLoaded +
+          " of " +
+          itemsTotal +
+          " files."
+      );
+    };
+    this.loadingManager.onError = url => {
+      console.log("Err loading: " + url);
+    };
+
     this.addShapes();
-    this.threeRender();
   }
   //set up camera, controls, scene, lights
   init = () => {
@@ -22,7 +58,7 @@ class ProjectView extends Component {
     );
 
     //init camera
-    this.camera.position.z = 50;
+    this.camera.position.z = 10;
     this.camera.position.y = 0;
     this.camera.position.x = 0;
 
@@ -57,16 +93,30 @@ class ProjectView extends Component {
   };
   //self explanatory
   addShapes = () => {
-    let geo2 = new THREE.DodecahedronGeometry(10, 1),
+    let geo2 = new THREE.DodecahedronGeometry(1, 1),
       mat2 = new THREE.MeshToonMaterial({ color: 0x00ffff });
     let mesh2 = new THREE.Mesh(geo2, mat2);
-
-    // let geo = new THREE.BoxGeometry(10, 225, 15);
-    // var material = new THREE.MeshBasicMaterial({
-    //   color: 0x00ff00
-    // });
-    // let cube = new THREE.Mesh(geo, material);
+    mesh2.position.set(0, 0, 0).normalize();
     this.scene.add(mesh2);
+    let loader = new THREE.ObjectLoader(this.loadingManager);
+    // console.log(loader);
+    loader.load("assets/models/stub.json", object => {
+      object.position.set(0, 0, 0).normalize();
+      // var mesh = new THREE.Mesh(geometry, materials);
+      this.scene.add(object);
+    });
+    loader.load("assets/models/left_branch.json", object => {
+      object.position.set(0, 0, 0).normalize();
+      // var mesh = new THREE.Mesh(geometry, materials);
+      this.scene.add(object);
+    });
+    loader.load("assets/models/right_branch.json", object => {
+      object.position.set(0, 0, 0).normalize();
+      // var mesh = new THREE.Mesh(geometry, materials);
+      this.scene.add(object);
+    });
+
+    // this.scene.add(mesh2);
     // this.scene.add(cube);
     console.log("shape added");
   };
@@ -93,8 +143,6 @@ class ProjectView extends Component {
     return (
       <div className={classes.ProjectView}>
         <Search submit={this.props.submit} />
-
-        {/* <canvas ref={ref => (this.mountLocation = ref)}></canvas> */}
         {this.props.repo.title ? (
           <p>Cool, you chose {this.props.repo.title}</p>
         ) : (
@@ -102,6 +150,8 @@ class ProjectView extends Component {
             Enter the name of a repository like so: [owner username]/[repo name]
           </h2>
         )}
+
+        <canvas ref={ref => (this.mountLocation = ref)}></canvas>
       </div>
     );
   }

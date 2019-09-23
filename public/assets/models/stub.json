@@ -1,0 +1,57 @@
+{
+	"metadata": {
+		"version": 4.5,
+		"type": "Object",
+		"generator": "Object3D.toJSON"
+	},
+	"geometries": [
+		{
+			"uuid": "2E676486-0B83-474F-A4E1-5F1BC9FEBF30",
+			"type": "TubeBufferGeometry",
+			"path": {
+				"metadata": {
+					"version": 4.5,
+					"type": "Curve",
+					"generator": "Curve.toJSON"
+				},
+				"arcLengthDivisions": 200,
+				"type": "CatmullRomCurve3",
+				"points": [[0,0,0],[0,-2,0]],
+				"closed": false,
+				"curveType": "chordal",
+				"tension": 0.5
+			},
+			"tubularSegments": 67,
+			"radius": 0.58,
+			"radialSegments": 4,
+			"closed": false
+		}],
+	"materials": [
+		{
+			"uuid": "2E7D78D8-3804-48A4-AEB5-588B7A2BB592",
+			"type": "MeshToonMaterial",
+			"color": 16728319,
+			"emissive": 0,
+			"specular": 1118481,
+			"shininess": 30,
+			"depthFunc": 3,
+			"depthTest": true,
+			"depthWrite": true,
+			"stencilWrite": false,
+			"stencilFunc": 519,
+			"stencilRef": 0,
+			"stencilMask": 255,
+			"stencilFail": 7680,
+			"stencilZFail": 7680,
+			"stencilZPass": 7680
+		}],
+	"object": {
+		"uuid": "B03CDDD5-1D5C-4897-9557-1EA9FE3D17C1",
+		"type": "Mesh",
+		"name": "Tube",
+		"layers": 1,
+		"matrix": [0.707107,0,-0.707107,0,0,1,0,0,0.707107,0,0.707107,0,1.975658,4.762337,0,1],
+		"geometry": "2E676486-0B83-474F-A4E1-5F1BC9FEBF30",
+		"material": "2E7D78D8-3804-48A4-AEB5-588B7A2BB592"
+	}
+}
